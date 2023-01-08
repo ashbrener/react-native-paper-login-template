@@ -1,20 +1,17 @@
 import React, { memo, useState } from 'react';
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
-import Background from '../components/Background';
-import Logo from '../components/Logo';
-import Header from '../components/Header';
-import Button from '../components/Button';
-import TextInput from '../components/TextInput';
-import BackButton from '../components/BackButton';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button } from '../components/button';
+import { TextInput } from '../components/text-input';
 import { theme } from '../core/theme';
 import { emailValidator, passwordValidator } from '../core/utils';
 import { Navigation } from '../types';
+import { Card } from '../components/card';
 
-type Props = {
+interface ILoginProps {
   navigation: Navigation;
-};
+}
 
-const LoginScreen = ({ navigation }: Props) => {
+export const Login = memo(({ navigation }: ILoginProps) => {
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
 
@@ -32,22 +29,16 @@ const LoginScreen = ({ navigation }: Props) => {
   };
 
   return (
-    <Background>
-      <BackButton goBack={() => navigation.navigate('HomeScreen')} />
-
-      <Logo />
-
-      <Header>Welcome back.</Header>
-
+    <Card headerText="Welcome back." goBack={ () => navigation.navigate('Home') }>
       <TextInput
         label="Email"
         returnKeyType="next"
-        value={email.value}
-        onChangeText={text => setEmail({ value: text, error: '' })}
-        error={!!email.error}
-        errorText={email.error}
+        value={ email.value }
+        onChangeText={ text => setEmail({ value: text, error: '' }) }
+        error={ !!email.error }
+        errorText={ email.error }
         autoCapitalize="none"
-        autoCompleteType="email"
+        autoComplete="email"
         textContentType="emailAddress"
         keyboardType="email-address"
       />
@@ -55,34 +46,34 @@ const LoginScreen = ({ navigation }: Props) => {
       <TextInput
         label="Password"
         returnKeyType="done"
-        value={password.value}
-        onChangeText={text => setPassword({ value: text, error: '' })}
-        error={!!password.error}
-        errorText={password.error}
+        value={ password.value }
+        onChangeText={ text => setPassword({ value: text, error: '' }) }
+        error={ !!password.error }
+        errorText={ password.error }
         secureTextEntry
       />
 
-      <View style={styles.forgotPassword}>
+      <View style={ styles.forgotPassword }>
         <TouchableOpacity
-          onPress={() => navigation.navigate('ForgotPasswordScreen')}
+          onPress={ () => navigation.navigate('ForgotPassword') }
         >
-          <Text style={styles.label}>Forgot your password?</Text>
+          <Text style={ styles.label }>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
 
-      <Button mode="contained" onPress={_onLoginPressed}>
+      <Button mode="contained" onPress={ _onLoginPressed }>
         Login
       </Button>
 
-      <View style={styles.row}>
-        <Text style={styles.label}>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
-          <Text style={styles.link}>Sign up</Text>
+      <View style={ styles.row }>
+        <Text style={ styles.label }>Don’t have an account? </Text>
+        <TouchableOpacity onPress={ () => navigation.navigate('Register') }>
+          <Text style={ styles.link }>Sign up</Text>
         </TouchableOpacity>
       </View>
-    </Background>
+    </Card>
   );
-};
+});
 
 const styles = StyleSheet.create({
   forgotPassword: {
@@ -102,5 +93,3 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
   },
 });
-
-export default memo(LoginScreen);

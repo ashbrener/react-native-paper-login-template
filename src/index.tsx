@@ -1,26 +1,10 @@
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { Screens } from './screens';
 
-import {
-  HomeScreen,
-  LoginScreen,
-  RegisterScreen,
-  ForgotPasswordScreen,
-  Dashboard,
-} from './screens';
-
-const Router = createStackNavigator(
-  {
-    HomeScreen,
-    LoginScreen,
-    RegisterScreen,
-    ForgotPasswordScreen,
-    Dashboard,
-  },
-  {
-    initialRouteName: 'HomeScreen',
-    headerMode: 'none',
-  }
-);
-
-export default createAppContainer(Router);
+export function Main() {
+  return (
+    <NavigationContainer>
+      <Screens/>
+    </NavigationContainer>
+  );
+}
